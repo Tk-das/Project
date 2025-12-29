@@ -1,6 +1,8 @@
+import Bill from "./bill/Bill.jsx"
+
 const App = ()=>{
     return <div>
-        appppppp
+        <Bill />
     </div>
 }
 
