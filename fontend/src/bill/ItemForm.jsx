@@ -1,4 +1,5 @@
 import {useState} from "react"
+import {createItem} from "./backendFun/item.js"
 
 import { TbArrowBack } from "react-icons/tb";
 
@@ -14,9 +15,12 @@ const ItemForm = ({setFormSelect})=>{
     const dataChangeFun = (e)=>{
         setItemDta({...itemDta,[e.target.name]:e.target.value})
     }
-    const itemSubFun = (e)=>{
+    const itemSubFun = async (e)=>{
         e.preventDefault()
-        alert(JSON.stringify(itemDta))
+        //alert(JSON.stringify(itemDta))
+        
+        await createItem(itemDta)
+        
         setItemDta({
             itemName:"",
             itemDescription:"",

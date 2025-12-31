@@ -9,14 +9,15 @@ import ItemForm from "./ItemForm.jsx"
 
 const Bill = ()=>{
     const [formSelect,setFormSelect]=useState("")
+    const [customerId,setCustomerId]=useState("")
     
     const formSelectFun = ()=>{
         switch(formSelect){
             case "customer":
-                return <CustomerForm setFormSelect={setFormSelect}/>
+                return <CustomerForm setCustomerId={setCustomerId} setFormSelect={setFormSelect}/>
                 break;
             case "project":
-                return <ProjectForm setFormSelect={setFormSelect}/>
+                return <ProjectForm customerId={customerId} setFormSelect={setFormSelect}/>
                 break;
             case "item":
                 return <ItemForm setFormSelect={setFormSelect}/>

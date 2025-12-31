@@ -1,8 +1,9 @@
 import {useState} from "react";
-
+import useProject from "./hooks/usrProject.js";
 import { TbArrowBack } from "react-icons/tb";
 
-const ProjectForm = ({setFormSelect})=>{
+const ProjectForm = ({setFormSelect,customerId})=>{
+    const {addProject} = useProject();
     const [projectDta,setProjectDta]=useState({
         projectName:"",
         projectAddress:"",
@@ -14,7 +15,14 @@ const ProjectForm = ({setFormSelect})=>{
     }
     const projectSubFun = (e)=>{
         e.preventDefault()
-        alert(JSON.stringify(projectDta))
+        const newDta = {
+            ...projectDta,
+            customerId:customerId,
+            itemId:[],
+        }
+        addProject(newDta)
+        
+        setFormSelect("item")
         setProjectDta({
             projectName:"",
             projectAddress:"",

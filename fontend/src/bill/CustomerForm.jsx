@@ -1,9 +1,18 @@
 import {useState} from "react"
-
+import useCustomer from "./hooks/useCustomer.js"
 import { TbArrowBack } from "react-icons/tb";
 
-const CustomerForm = ({setFormSelect})=>{
+const CustomerForm = ({setFormSelect,setCustomerId})=>{
     const [tgl,setTgl]=useState("hidden")
+    const {allCustomer} = useCustomer();
+    const selectCustomerFun = (e)=>{
+        const id = e.target.value
+        if(id.length > 0){
+            setCustomerId(id);
+            setFormSelect("project")
+        }
+    }
+    
     return <div
         className="flex justify-center items-center absolute top-0 left-0 min-h-full w-full bg-[rgba(0,30,25,1)]"
     >
@@ -16,11 +25,14 @@ const CustomerForm = ({setFormSelect})=>{
             </div>
             <div>
                 <div className="flex justify-center items-center gap-4 p-4 mb-6">
-                    <select className="outline-none border rounded py-2 px-4 text-[rgba(0,100,200,1)]">
-                        <option>Select Customer</option>
-                        <option>Select</option>
-                        <option>Select</option>
-                        <option>Select</option>
+                    <select 
+                        onChange={selectCustomerFun}
+                        className="outline-none border rounded py-2 px-4 text-[rgba(0,100,200,1)]"
+                    >
+                        <option value="">Select Customer</option>
+                        {allCustomer.map((v,i)=>{
+                            return <option key={v._id} value={v._id}>{v.customerName}</option>
+                        })}
                     </select>
                     <button 
                         onClick={()=>(tgl==="hidden") ? setTgl("block") : setTgl("hidden")}
@@ -30,24 +42,26 @@ const CustomerForm = ({setFormSelect})=>{
                     </button>
                 </div>
             </div>
-            <CusForm tgl={tgl}/>
+            <CusForm tgl={tgl} setFormSelect={setFormSelect}/>
         </div>
     </div>
 }
 export default CustomerForm;
 
-const CusForm = ({tgl})=>{
+const CusForm = ({tgl,setFormSelect})=>{
     const [customerDta,setCustomerDta]=useState({
         customerName:"",
         customerAddress:"",
         customerContact:""
     })
+    const {addCustomer} = useCustomer();
     const dataChangeFun = (e)=>{
         setCustomerDta({...customerDta,[e.target.name]:e.target.value})
     }
     const customerSubFun = (e)=>{
         e.preventDefault()
-        alert(JSON.stringify(customerDta))
+        addCustomer(customerDta)
+        setFormSelect("")
         setCustomerDta({
             customerName:"",
             customerAddress:"",

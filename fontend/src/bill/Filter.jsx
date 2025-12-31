@@ -6,10 +6,10 @@ const Filter = ({setFormSelect})=>{
             value=""
             type="text"
             placeholder="Search project..."
-            className="border rounded-full w-[220px] outline-none px-4 py-2"
+            className="border rounded-full w-[200px] outline-none px-4 py-2"
         />
         <button
-            onClick={()=>setFormSelect("project")}
+            onClick={()=>setFormSelect("customer")}
             className="rounded-full bg-[rgba(0,170,90,1)] text-white font-semibold tracking-wide px-4 py-2"
         >
             Create-Project
