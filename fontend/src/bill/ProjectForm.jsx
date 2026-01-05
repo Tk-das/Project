@@ -1,14 +1,25 @@
-import {useState} from "react";
-import useProject from "./hooks/usrProject.js";
+import {useState,useEffect} from "react";
 import { TbArrowBack } from "react-icons/tb";
 
-const ProjectForm = ({setFormSelect,customerId})=>{
-    const {addProject} = useProject();
-    const [projectDta,setProjectDta]=useState({
-        projectName:"",
-        projectAddress:"",
-        projectContact:"",
-        advance:""
+const ProjectForm = ({
+    setFormSelect,
+    customerId,
+    allCustomer,
+    projectId,
+    addProject,
+    allProject,
+    editProject,
+})=>{
+    const [projectDta,setProjectDta]=useState(()=>{
+        if(projectId && allProject.length > 0){
+            return allProject.find((v)=>v._id===projectId)
+        }
+        return {
+            projectName:"",
+            projectAddress:"",
+            projectContact:"",
+            advance:""
+        }
     })
     const dtaChangeFun = (e)=>{
         setProjectDta({...projectDta,[e.target.name]:e.target.value})
@@ -22,7 +33,7 @@ const ProjectForm = ({setFormSelect,customerId})=>{
         }
         addProject(newDta)
         
-        setFormSelect("item")
+        setFormSelect("")
         setProjectDta({
             projectName:"",
             projectAddress:"",
@@ -31,10 +42,16 @@ const ProjectForm = ({setFormSelect,customerId})=>{
         })
     }
     
+    const projectEditFun = (e)=>{
+        e.preventDefault();
+        editProject(projectDta._id,projectDta);
+        setFormSelect("")
+    }
+    
     return <div 
-        className="absolute flex justify-center items-center h-full top-0 left-0 bg-[rgba(0,30,25,1)]"
+        className="absolute flex justify-center items-center min-h-full w-full top-0 left-0 bg-[rgba(0,30,25,1)]"
     >
-        <div className="bg-[rgba(235,255,225,1)] pb-4 text-[rgba(15,0,90,1)]">
+        <div className="bg-[rgba(235,255,225,1)] pb-4 my-8 text-[rgba(15,0,90,1)]">
         <div className="flex justify-between px-4 py-2">
             <span
                 className="capitalize text-2xl font-bold"
@@ -43,9 +60,12 @@ const ProjectForm = ({setFormSelect,customerId})=>{
                 <TbArrowBack size={30}/>
             </button>
         </div>
+        <span className="px-6 font-semibold text-[12px]">
+            Customer :- {allCustomer.find(v=>v._id===projectDta.customerId)?.customerName}
+        </span>
         
         <form
-            onSubmit={projectSubFun}
+            onSubmit={projectDta._id ? projectEditFun : projectSubFun}
             className="border mx-4 p-4 mt-4 rounded"
         >
             <input 
@@ -105,10 +125,11 @@ const ProjectForm = ({setFormSelect,customerId})=>{
                     <option>TAKA</option>
                 </select>
             </div>
-            <input 
-                type="submit"
+            <button
                 className="bg-[rgba(0,160,200,1)] w-full text-white rounded py-2 font-semibold my-6"
-            />
+            >
+                {!projectId ? "Submit" : "Update"}
+            </button>
         </form>
         </div>
     </div>

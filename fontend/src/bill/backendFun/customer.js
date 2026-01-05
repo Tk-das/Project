@@ -8,3 +8,7 @@ export const createCustomer = (data)=>{
 export const getAllCustomer = ()=>{
     return axios.get(API_URL)
 }
+
+export const updateCustomer = (id,data)=>{
+    return axios.put(`${API_URL}/${id}`,data)
+}

@@ -1,10 +1,14 @@
 import {useState} from "react"
-import useCustomer from "./hooks/useCustomer.js"
 import { TbArrowBack } from "react-icons/tb";
 
-const CustomerForm = ({setFormSelect,setCustomerId})=>{
+const CustomerForm = ({
+    setFormSelect,
+    setCustomerId,
+    addCustomer,
+    allCustomer,
+    editCustomer,
+})=>{
     const [tgl,setTgl]=useState("hidden")
-    const {allCustomer} = useCustomer();
     const selectCustomerFun = (e)=>{
         const id = e.target.value
         if(id.length > 0){
@@ -16,7 +20,7 @@ const CustomerForm = ({setFormSelect,setCustomerId})=>{
     return <div
         className="flex justify-center items-center absolute top-0 left-0 min-h-full w-full bg-[rgba(0,30,25,1)]"
     >
-        <div className="bg-[rgba(235,255,225,1)] text-[rgba(15,0,90,1)] w-full p-4">
+        <div className="bg-[rgba(235,255,225,1)] text-[rgba(15,0,90,1)] w-full my-8 p-4">
             <div className="flex justify-between items-center">
                 <span className="font-bold">Select your customer</span>
                 <div onClick={()=>setFormSelect("")}>
@@ -42,19 +46,26 @@ const CustomerForm = ({setFormSelect,setCustomerId})=>{
                     </button>
                 </div>
             </div>
-            <CusForm tgl={tgl} setFormSelect={setFormSelect}/>
+            <CusForm 
+                addCustomer={addCustomer}
+                tgl={tgl} 
+                setFormSelect={setFormSelect}
+            />
         </div>
     </div>
 }
 export default CustomerForm;
 
-const CusForm = ({tgl,setFormSelect})=>{
+const CusForm = ({
+    tgl,
+    setFormSelect,
+    addCustomer,
+})=>{
     const [customerDta,setCustomerDta]=useState({
         customerName:"",
         customerAddress:"",
         customerContact:""
     })
-    const {addCustomer} = useCustomer();
     const dataChangeFun = (e)=>{
         setCustomerDta({...customerDta,[e.target.name]:e.target.value})
     }

@@ -3,7 +3,12 @@ import {createItem} from "./backendFun/item.js"
 
 import { TbArrowBack } from "react-icons/tb";
 
-const ItemForm = ({setFormSelect})=>{
+const ItemForm = ({
+    setFormSelect,
+    addItem,
+    allItem,
+    editItem,
+})=>{
     const [itemDta,setItemDta]=useState({
         itemName:"",
         itemDescription:"",
@@ -34,7 +39,7 @@ const ItemForm = ({setFormSelect})=>{
     return <div
         className="flex justify-center items-center absolute w-full min-h-full top-0 left-0 bg-[rgba(0,30,25,1)]"
     >
-        <div className="bg-[rgba(235,255,225,1)] text-[rgba(15,0,90,1)] w-full">
+        <div className="bg-[rgba(235,255,225,1)] text-[rgba(15,0,90,1)] w-full my-8">
             <div
                 className="flex justify-between items-center p-4"
             >

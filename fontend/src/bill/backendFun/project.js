@@ -8,3 +8,7 @@ export const createProject = (data)=>{
 export const getAllProject = ()=>{
     return axios.get(API_URL)
 }
+
+export const updateProject = (id,data)=>{
+    return axios.put(`${API_URL}/${id}`,data)
+}
