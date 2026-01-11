@@ -5,7 +5,7 @@ const Header = ()=>{
         <span
             className="text-[rgba(225,0,75,1)]"
         >
-            Billll
+            Bill
         </span>
         <span> </span>
         <span>Calculator</span>
